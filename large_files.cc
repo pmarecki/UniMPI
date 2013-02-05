@@ -48,6 +48,8 @@
  *
  */
 
+
+// Main routine.
 void WriteBulk(const char* fname, ulint size) {
   ulint bufor[128];
   ofstream f;
@@ -85,8 +87,8 @@ void WriteBatches(ulint ssize, int num_files) {
       1. / xx.LastDt() * ssize * num_files);
 }
 
-//using file descriptors
-//perhaps will work; but is slowwwww (?why?)
+// Using file descriptors of posix interface.
+// Why is this slowwwww?
 void WriteBulkHuge(const char* fname, ulint size) {
   ulint num_numbers = size / 8;
   PosixStoper xx;
@@ -112,10 +114,5 @@ int main(void) {
 
 
   cout << typeid(1L).name() << " " << sizeof(1UL) << endl;
-
-//#ifdef _GLIBCXX_USE_LFS
-//  cout << "LFS\n";    //has it
-//  cout << _FILE_OFFSET_BITS <<endl;
-//#endif
 
 }
