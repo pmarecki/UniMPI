@@ -4,8 +4,6 @@
 #include "stoper.h"         //my timing setup (will not work on Windows yet)
 #include "STL_MACRO.h"      //my common macros for shorter code
 
-
-
 #define WORLD MPI_COMM_WORLD  //everyone
 
 int main (int argc, char *argv[])

@@ -10,18 +10,20 @@
 
 #include <inttypes.h>
 
+#include <cassert>
 #include <iostream>
 #include <fstream>
 #include <vector>
 #include <list>
 #include <set>
+#include <map>
 #include <algorithm>
 #include <iterator>
 #include <cstdlib>
 #include <queue>
 #include <stack>
-
 using namespace std;
+
 
 //Integer types
 typedef uint64_t ulint;
@@ -32,21 +34,21 @@ typedef uint8_t  uchar;
 //containers
 typedef vector<int> vi;
 typedef vector<vi> vvi;
-typedef pair<int,int> ii;
-typedef vector<ii> vii;
+typedef pair<int,int> pii;
+typedef vector<pii> vii;
+
 typedef set<int> si;
+typedef multiset<int> mi;
 typedef list<int> li;
+typedef vector<string> vs;
 
 //traversing macros (use google style guide)
 
-#define REP(i,n) for(int i=0;i<(n);++i)
-#define FOR(i,a,b) for(int i=(a);i<=(b);++i)
-
+#define REP(i,n) for(uint i=0;i<(n);++i)
 
 //use `decltype` in >VC2010
 #define TR(c,i) for(__typeof((c).begin()) i = (c).begin(); i != (c).end(); ++i)
 #define ALL(c) (c).begin(),(c).end()
-
 
 
 //shortcuts
@@ -58,6 +60,15 @@ typedef list<int> li;
 const int INF = 11100000;
 
 
+inline void EEE() {
+  printf("\n");
+}
+
+inline void assign_less(int *reg, int val) {
+  if (val < *reg) *reg = val;
+}
+
+
 template <typename  T>
 void PrintContainer(const T w) {
   printf("{");
@@ -67,9 +78,6 @@ void PrintContainer(const T w) {
   printf("\b\b}\n");
 }
 
-void EEE() {
-  printf("\n");
-}
 
 
 void PrintBit(uint H) {
@@ -82,12 +90,28 @@ void PrintBit(uint H) {
   EEE();
 }
 
+void PrintBit(ulint H) {
+  REP(i, 64) {
+    ulint no = H;
+    int bit = 63 - i%64;
+    bool val = (no & (1UL<<bit));
+//    printf("(%i),", bit);
+    printf("%i%s%s", val, ((i+1)%8==0)?" ":"",(i+1)%64==0?"| ":"");
+  }
+//  EEE();
+}
+
+
+
 uint lrot32(uint x, uint n) {
   return ((x << n) | (x >> (32-n)));
 }
 uint rrot32(uint x, uint n) {
   return ((x >> n) | (x << (32-n)));
 }
+
+//Returns lowest byte of a pointer.
+inline uint32_t Lptr(void *ptr) { return (uint64_t)(ptr) & 0xfff;}
 
 
 

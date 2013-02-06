@@ -1,4 +1,3 @@
-/**
  *  Simple code for storing large files, and measuring MEM->HDD bandwidth.
  *
  *
