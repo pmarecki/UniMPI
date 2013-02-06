@@ -1,7 +1,13 @@
+/**
+ *  Simple code for storing large files, and measuring MEM->HDD bandwidth.
+ *
+ *
+ */
+
 #include <fstream>
 
-#include "../STL_MACRO.h"
-#include "../stoper.h"
+#include "STL_MACRO.h"
+#include "stoper.h"
 
 #include <stdio.h>
 #include <fcntl.h>
@@ -34,30 +40,16 @@
 //[each:128.00MB; files:32] time: 52075[msec], bandwidth:  82MB/s
 //[each:256.00MB; files:32] time:129239[msec], bandwidth:  66MB/s
 
-/**
- *  Opening files with parameterized names:
- *
-//  fstream f;
-//  int k = 12;
-//  char fname[8];
-//  sprintf(fname,"file%4i",k);
-//  f.open(fname, ios::out);
-//  f.write(fname,8);
-//  f.close();
-//  printf(".%s.\n", fname);
- *
- */
-
 
 // Main routine.
 void WriteBulk(const char* fname, ulint size) {
   ulint bufor[128];
   ofstream f;
-  ulint packets = size / 1024;
+  ulint packets = size / 1024;   //"uling" = uint64_t"
   PosixStoper xx;
   f.open(fname, ios::out | ios::binary);
   for(ulint i=0; i<packets; ++i) {
-    f.write((char*)bufor, 1024);
+    f.write((char*)bufor, 1024);    //writing in packets of 1kB
   }
   f.close();
   xx.Snap();
@@ -88,7 +80,6 @@ void WriteBatches(ulint ssize, int num_files) {
 }
 
 // Using file descriptors of posix interface.
-// Why is this slowwwww?
 void WriteBulkHuge(const char* fname, ulint size) {
   ulint num_numbers = size / 8;
   PosixStoper xx;
@@ -104,15 +95,13 @@ void WriteBulkHuge(const char* fname, ulint size) {
 }
 
 
-#include <typeinfo>
+#include <typeinfo> //for typeid below
 
 int main(void) {
-//  for(int i=20; i < 29; i++)
-//    WriteBatches(1 << i, 32);
-//  for(int i=31; i<32; ++i)
-//    WriteBulk("aa.txt", 1L<<i);
+  for(int i=20; i<32; ++i)
+    WriteBulk("aa.txt", 1UL<<i);    //few tests parametrized by file size
 
-
-  cout << typeid(1L).name() << " " << sizeof(1UL) << endl;
+  //Watch out for 1UL; per default "typeid(1).name() = int". 
+  //cout << typeid(1L).name() << " " << sizeof(1UL) << endl;
 
 }
