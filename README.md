@@ -1,6 +1,7 @@
 UniMPI
 ======
 
-Few algos using MPI
+Few algos for combinatorial and rendering problems. 
 
-(in Polish?)
+Methods (using MPI) for attacking similar, though more demanding, problems.  
+
