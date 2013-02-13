@@ -9,10 +9,13 @@
 #define STL_MACROS_H_
 
 #include <inttypes.h>
-
+#include <cmath>
 #include <cassert>
+
 #include <iostream>
 #include <fstream>
+#include <sstream>
+
 #include <vector>
 #include <list>
 #include <set>
@@ -45,6 +48,7 @@ typedef vector<string> vs;
 //traversing macros (use google style guide)
 
 #define REP(i,n) for(uint i=0;i<(n);++i)
+#define REP1(i,n) for(uint i=1;i<=(n);++i)
 
 //use `decltype` in >VC2010
 #define TR(c,i) for(__typeof((c).begin()) i = (c).begin(); i != (c).end(); ++i)
@@ -57,7 +61,17 @@ typedef vector<string> vs;
 #define PRESENT(c,x) ((c).find(x) != (c).end())
 #define CPRESENT(c,x) (find(ALL(c),x) != (c).end())
 
-const int INF = 11100000;
+const int INF = 2110000000;
+
+//Arithmetics
+
+// 1/5 --> 1;   5/5-->1;   6/5-->2
+inline int CeilDiv(int a, int b) {
+  int r = (a % b)? 1: 0;
+  return a / b + r;
+}
+
+
 
 
 inline void EEE() {

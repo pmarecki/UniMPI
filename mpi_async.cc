@@ -15,12 +15,12 @@ int main (int argc, char *argv[])
   MPI_Comm_rank(WORLD, &kTid);
 
   int *m = new int[3];       //short message
-  MPI_Request s, r;
 
   printf("MPI[%d/%d] has started...\n", kTid, kDim);
   uint h;
   MPI_Barrier(WORLD);
   
+  MPI_Request s, r;
   int flag;
   MPI_Test(&r, &flag, &status); //returns immediately, if Request not registerd
 
