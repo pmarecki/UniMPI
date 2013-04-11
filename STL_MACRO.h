@@ -25,11 +25,14 @@
 #include <cstdlib>
 #include <queue>
 #include <stack>
+#include <bitset>
+#include <cstring>
 using namespace std;
 
 
 //Integer types
 typedef uint64_t ulint;
+typedef int64_t   lint;
 typedef uint32_t uint;
 typedef uint16_t usint;
 typedef uint8_t  uchar;
@@ -47,49 +50,72 @@ typedef vector<string> vs;
 
 //traversing macros (use google style guide)
 
-#define REP(i,n) for(uint i=0;i<(n);++i)
-#define REP1(i,n) for(uint i=1;i<=(n);++i)
+#define REP(i,n)  for(int i=0;i<(n);++i)
+#define FOR(i,l,u) for(int i=l;i<(u);++i)
 
 //use `decltype` in >VC2010
 #define TR(c,i) for(__typeof((c).begin()) i = (c).begin(); i != (c).end(); ++i)
 #define ALL(c) (c).begin(),(c).end()
+#define SS size()
+
+#define SET_MIN(v,nv) if ((v) > (nv)) (v)=(nv);
+#define SET_MAX(v,nv) if ((v) < (nv)) (v)=(nv);
 
 
 //shortcuts
 #define PB push_back
 #define MP make_pair
-#define PRESENT(c,x) ((c).find(x) != (c).end())
-#define CPRESENT(c,x) (find(ALL(c),x) != (c).end())
 
-const int INF = 2110000000;
+#define TOP(s) (*s.begin() )        //no range checking
+#define POP(s) s.erase(s.begin())   //no range checking
 
-//Arithmetics
 
-// 1/5 --> 1;   5/5-->1;   6/5-->2
-inline int CeilDiv(int a, int b) {
-  int r = (a % b)? 1: 0;
-  return a / b + r;
+
+const int INF = 1e9;
+
+
+//Returns (-1)^k
+inline int SIGN(int k) {
+  return (k % 2)? -1 : 1;
 }
-
-
-
 
 inline void EEE() {
   printf("\n");
 }
 
-inline void assign_less(int *reg, int val) {
-  if (val < *reg) *reg = val;
+double dist_E(double x1, double y1, double x2, double y2) {
+  return sqrt( (x1-x2)*(x1-x2) + (y1-y2)*(y1-y2) );
 }
+
 
 
 template <typename  T>
 void PrintContainer(const T w) {
   printf("{");
-  TR(w, i) {
-    printf("%i, ", *i);
-  }
+  TR(w, i)
+    if (*i != INF && *i != (-INF))
+      printf("%2i, ", *i);
+    else
+      printf(" -, ");
   printf("\b\b}\n");
+}
+
+
+#define PrintMatrix(G,N,M) \
+  printf("    "); \
+  REP(i,M) printf("[%1i]", i % 10); \
+  EEE(); \
+  REP(i,N) {                                              \
+      printf("[%2i]",i);                                  \
+      REP(j,M)                                            \
+        printf("%3i", (G[i][j]==INF)?-1:(int)G[i][j]);    \
+      EEE();                                              \
+    }
+
+inline string ToString(int x) {
+	char buf[40];
+	sprintf(buf, "%d", x);
+	return buf;
 }
 
 
@@ -115,6 +141,12 @@ void PrintBit(ulint H) {
 //  EEE();
 }
 
+//good up to a=50000
+int qroot(lint a) {
+  double r = pow(a,1./3) + 0.0000000001;
+  return (int)r;
+}
+
 
 
 uint lrot32(uint x, uint n) {
@@ -130,3 +162,4 @@ inline uint32_t Lptr(void *ptr) { return (uint64_t)(ptr) & 0xfff;}
 
 
 #endif /* STL_MACROS_H_ */
+
